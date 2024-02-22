@@ -1,0 +1,9 @@
+{
+  "name": "skylab/studio",
+  "version": "0.0.1",
+  "author": "SkylabTech <info@skylabtech.ai>",
+  "description": "studio.skylabtech.ai PHP client",
+  "require": {
+    "guzzlehttp/guzzle": "^7.0"
+  }
+}
