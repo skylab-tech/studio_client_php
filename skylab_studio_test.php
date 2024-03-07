@@ -21,15 +21,21 @@ function randomName($model)
 
 // echo(randomName('job'));
 
-$data = [
-  'name' => randomName('job'),
-  'profile_id' => 24
-];
+// $data = [
+//   'name' => randomName('job'),
+//   'profile_id' => 24
+// ];
 
-$res = $api->createJob($data);
+// $res = $api->createJob($data);
 
 // $res = $api->updateJob(8233, $data);
 
 // $res = $api->deleteJob(8233);
+
+
+// PHOTOS
+// $res = $api->getPhoto(214738);
+
+$res = $api->uploadJobPhoto('/Users/brandonliu/Desktop/small sample photos/IMG_0107.JPG', 8235);
 
 print_r($res);
