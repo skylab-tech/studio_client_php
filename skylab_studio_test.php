@@ -3,7 +3,7 @@ require_once 'SkylabStudio.php';
 
 $api = new SkylabStudio("16V7LPczUNXb6cdY7V15G5s5");
 
-// $res = $api->getJob(8233);
+$res = $api->getJob(8231);
 
 // $res = $api->getJobByName("b7280bc1-8cb9-4a15-84b8-cee35ebf2a8b");
 // $res = $api->getJobsInFront(8233);
@@ -36,6 +36,6 @@ function randomName($model)
 // PHOTOS
 // $res = $api->getPhoto(214738);
 
-$res = $api->uploadJobPhoto('/Users/brandonliu/Desktop/small sample photos/IMG_0107.JPG', 8235);
+// $res = $api->uploadJobPhoto('/Users/brandonliu/Desktop/small sample photos/IMG_0107.JPG', 8235);
 
 print_r($res);
