@@ -63,9 +63,9 @@ final class JobsTest extends TestCase {
 
 	public function testGetJobByName() {
 		$jobName = &$this->getJobName();
-
+		
 		$response = $this->api->getJobByName($jobName);
-
+		
 		$this->assertEquals($response->name, $jobName);
 	}
 
@@ -73,5 +73,13 @@ final class JobsTest extends TestCase {
 		$response = $this->api->listJobs();
 
 		$this->assertNotEmpty($response);
+	}
+	
+	public function testDeleteJob() {
+		$jobId = &$this->getJobId();
+
+		$response = $this->api->deleteJob($jobId);
+
+		$this->assertEquals($response->id, $jobId);
 	}
 }

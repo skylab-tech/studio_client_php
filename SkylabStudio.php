@@ -145,6 +145,7 @@ class SkylabStudio {
 				return json_decode($data);
 
 			} else {
+				print_r("call failed INSWIDE HANDLE RESP ELSE", $data);
 				$formattedResponse = [
 					'message' => isset($data['message']) ? $data['message'] : 'Unknown error',
 					'status' => isset($data['status']) ? $data['status'] : 'Unknown status',

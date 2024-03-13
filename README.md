@@ -13,34 +13,34 @@ composer install skylab-studio
 ```php
 require_once 'SkylabStudio.php';
 
-$api = new SkylabStudio("your-api-key");
+$api = new SkylabStudio('your-api-key');
 
 // CREATE PROFILE
-const profilePayload = {
-  "name": "profile name",
-  "enable_crop": false,
-  "enable_retouch": true
-}
+$profilePayload = [
+  'name' => 'profile name',
+  'enable_crop' => false,
+  'enable_retouch' => true
+]
 
-const profile = $api.createProfile(profilePayload)
+$profile = $api.createProfile(profilePayload)
 
 // CREATE JOB
-const jobPayload = {
-  "name": "job name",
-  "profile_id": profile.id
-}
+$jobPayload = [
+  'name' => 'job name',
+  'profile_id' => profile.id
+]
 
-const job = $api.createJob(jobPayload)
+$job = $api.createJob(jobPayload)
 
 // UPLOAD JOB PHOTO(S)
-const filePath = "/path/to/photo"
-$api.uploadJobPhoto(filePath, job.id)
+$filePath = '/path/to/photo'
+$api.uploadJobPhoto($filePath, $job->id)
 
 // QUEUE JOB
-payload = { "callback_url" = "YOUR_CALLBACK_ENDPOINT" }
-$api.queueJob(job.id, payload)
+$payload = [ 'callback_url' => 'YOUR_CALLBACK_ENDPOINT' ]
+$api.queueJob(job.id, $payload)
 
-// NOTE: Once the job is queued, it will get processed then completed
+// NOTE: Once the job is queued, it will transition to processed and then completed
 // We will send a response to the specified callback_url with the output photo download urls
 ```
 
@@ -55,10 +55,13 @@ $api.listJobs();
 ### Create a Job
 
 ```php
-$api.createJob({
-  name: "your unique job name",
-  profile_id: 123,
-});
+
+$payload = [
+  'name' => 'your unique job name',
+  'profile_id' => 123
+]
+
+$api.createJob($payload);
 ```
 
 For all payload options, consult the [API documentation](https://studio-docs.skylabtech.ai/#tag/job/operation/createJob).
@@ -66,19 +69,24 @@ For all payload options, consult the [API documentation](https://studio-docs.sky
 ### Get a Job
 
 ```php
-$api.getJob(jobId);
+$api.getJob($jobId);
 ```
 
 ### Get Job by Name
 
 ```php
-$api.getJobByName(name);
+$api.getJobByName($name);
 ```
 
 ### Update a Job
 
 ```php
-$api.updateJob(jobId, { name: "updated job name", profile_id: 456 });
+$payload = [
+  'name' => 'your updated job name',
+  'profile_id' => 123
+]
+
+$api.updateJob($jobId, $payload);
 ```
 
 For all payload options, consult the [API documentation](https://studio-docs.skylabtech.ai/#tag/job/operation/updateJobById).
@@ -86,29 +94,27 @@ For all payload options, consult the [API documentation](https://studio-docs.sky
 ### Queue Job
 
 ```php
-const payload = {
-  callback_url: "desired_callback_url",
-};
+$payload = [ 'callback_url' => 'YOUR_CALLBACK_ENDPOINT' ]
 
-$api.queueJob(jobId, payload);
+$api.queueJob($jobId, $payload);
 ```
 
 ### Jobs in Front
 
 ```php
-$api.getJobsInFront(jobId);
+$api.getJobsInFront($jobId);
 ```
 
 ### Delete a Job
 
 ```php
-$api.deleteJob(jobId);
+$api.deleteJob($jobId);
 ```
 
 ### Cancel a Job
 
 ```php
-$api.cancelJob(jobId);
+$api.cancelJob($jobId);
 ```
 
 ## Profiles
@@ -122,9 +128,9 @@ $api.listProfiles();
 ### Create a Profile
 
 ```php
-$api.createProfile({
-  name: "My Profile",
-});
+$api.createProfile([
+  'name' => 'My Profile'
+]);
 ```
 
 For all payload options, consult the [API documentation](https://studio-docs.skylabtech.ai/#tag/profile/operation/createProfile).
@@ -132,17 +138,17 @@ For all payload options, consult the [API documentation](https://studio-docs.sky
 ### Get a Profile
 
 ```php
-$api.getProfile(profileId);
+$api.getProfile($profileId);
 ```
 
 ### Update profile
 
 ```php
-payload = {
-  name: "My updated profile name",
-};
+$payload = [
+  'name' => 'My updated profile name',
+];
 
-$api.updateProfile(profileId, payload);
+$api.updateProfile($profileId, $payload);
 ```
 
 For all payload options, consult the [API documentation](https://studio-docs.skylabtech.ai/#tag/profile/operation/updateProfileById).
@@ -154,7 +160,7 @@ For all payload options, consult the [API documentation](https://studio-docs.sky
 This function handles validating a photo, creating a photo object and uploading it to your job/profile's s3 bucket. If the bucket upload process fails, it retries 3 times and if failures persist, the photo object is deleted.
 
 ```php
-$api.uploadJobPhoto(photoPath, jobId);
+$api.uploadJobPhoto($photoPath, $jobId);
 ```
 
 `Returns: { photo: { photoObject }, uploadResponse: bucketUploadResponseStatus }`
@@ -166,7 +172,7 @@ If upload fails, the photo object is deleted for you. If upload succeeds and you
 This function handles validating a background photo for a profile. Note: `enable_extract` and `replace_background` (profile attributes) **MUST** be true in order to create background photos. Follows the same upload process as uploadJobPhoto.
 
 ```php
-$api.uploadProfilePhoto(photoPath, profileId);
+$api.uploadProfilePhoto($photoPath, $profileId);
 ```
 
 `Returns: { photo: { photoObject }, uploadResponse: bucketUploadResponseStatus }`
@@ -176,13 +182,13 @@ If upload fails, the photo object is deleted for you. If upload succeeds and you
 ### Get a Photo
 
 ```php
-$api.getPhoto(photoId);
+$api.getPhoto($photoId);
 ```
 
 ### Delete a Photo
 
 ```php
-$api.deletePhoto(photoId);
+$api.deletePhoto($photoId);
 ```
 
 ### Validate HMAC Headers
@@ -192,10 +198,11 @@ $api.deletePhoto(photoId);
 - requestTimestamp: Timestamp header received in callback under 'X-Skylab-Timestamp'
 - signature: Signature header received in callback under 'X-Skylab-Signature'
 
-**NOTE:** If using something like an express server to handle the callback, the JSON response needs to be the raw response. If your express server is running `app.use(express.json)` you will need to create a middleware and pass it to your callback handler to use the raw response: `app.use(express.raw({ type: "application/json" }))`
+// TODO - NOT RELEVANT
+**NOTE:** If using something like an express server to handle the callback, the JSON response needs to be the raw response. If your express server is running `app.use(express.json)` you will need to create a middleware and pass it to your callback handler to use the raw response: `app.use(express.raw({ type: 'application/json' }))`
 
 ```php
-$api.validateHmacHeaders(secretKey, jobJson, requestTimestamp, signature);
+$api.validateHmacHeaders($secretKey, $jobJson, $requestTimestamp, $signature);
 ```
 
 ## Troubleshooting
@@ -209,13 +216,14 @@ $api.validateHmacHeaders(secretKey, jobJson, requestTimestamp, signature);
 ### Enable Debug Mode
 
 Debug mode prints out the underlying request information as well as the data payload that gets sent to Skylab.
-You will most likely find this information in your logs. To enable it, simply put `debug=true` as a parameter
+You will most likely find this information in your logs. To enable it, simply put `true` as a parameter
 when instantiating the API object.
 
 ```php
-const skylabStudio = require("skylab-studio");
+// TODO THIS SHOULD BE SKYLAB-STUDIO
+require_once 'skylab-studio';
 
-const api = skylabStudio("your-api-key", (debug = true));
+$api = new SkylabStudio("your-api-key", true);
 ```
 
 ### Response Ranges
