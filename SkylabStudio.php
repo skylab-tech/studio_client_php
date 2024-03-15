@@ -1,6 +1,8 @@
 <?php
 
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
+use Psr\Http\Message\ResponseInterface;
 
 require_once 'Job.php';
 require_once 'Profile.php';
@@ -125,16 +127,17 @@ class SkylabStudio {
 
 		public function makeRequest($method, $url, $options) {
 			$client = new GuzzleHttp\Client();
-			$resp = [];
-			try {
-			$resp = $client->request($method, $url, $options);
-			return $this->handleResponse($resp);
-			}
-			catch (Exception $e) {
-				error_log($e->getMessage());
-				echo 'WTF......' . $e->getCode();
-				return array('status' => $e->getCode(), 'message'=> $e->getMessage());
-			}
+			$promise = $client->requestAsync($method, $url, $options);
+
+			return $promise->then(
+				function (ResponseInterface $res) {
+					return $this->handleResponse($res);
+				},
+				function (RequestException $e) {
+					error_log($e->getMessage() . "\n");
+					return array('status' => $e->getCode(), 'message'=> $e->getMessage());
+				}
+			)->wait();
 		}
 
 		public function handleResponse($response) {
@@ -145,7 +148,6 @@ class SkylabStudio {
 				return json_decode($data);
 
 			} else {
-				print_r("call failed INSWIDE HANDLE RESP ELSE", $data);
 				$formattedResponse = [
 					'message' => isset($data['message']) ? $data['message'] : 'Unknown error',
 					'status' => isset($data['status']) ? $data['status'] : 'Unknown status',

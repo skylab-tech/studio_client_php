@@ -48,6 +48,8 @@ $api.queueJob(job.id, $payload)
 
 ### List all Jobs
 
+List the last 30 jobs.
+
 ```php
 $api.listJobs();
 ```
