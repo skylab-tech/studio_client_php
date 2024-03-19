@@ -5,7 +5,7 @@ final class ProfilesTest extends TestCase {
 	private $api;
 
 	protected function setUp(): void {
-		$this->api = new SkylabStudio("16V7LPczUNXb6cdY7V15G5s5");
+		$this->api = new SkylabStudio(getenv('SKYLAB_API_KEY'));
 	}
 
 	protected function &getProfileId() {
