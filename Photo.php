@@ -59,7 +59,6 @@ class Photo
 			$photoName = basename($photoPath);
 
 			$uploadOptions = [];
-
 			$file = Vips\Image::newFromFile($photoPath);
 
 			if ($ext === "png") {
@@ -77,7 +76,6 @@ class Photo
 
 			if ($model == "job") {
 					$job = $this->SkylabStudio->getJob($id);
-					print_r($job->type);
 					if ($job->type == "regular") {
 							$uploadOptions['headers']["X-Amz-Tagging"] = "job=photo&api=true";
 					}
