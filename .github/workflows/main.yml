@@ -29,6 +29,9 @@ jobs:
       - name: Run php ini
         run: php --ini
 
+      - name: cat ini
+        run: cat /etc/php/8.3/cli/php.ini
+
       - uses: php-actions/composer@v6
       - uses: php-actions/phpunit@v3
 
