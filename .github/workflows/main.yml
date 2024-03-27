@@ -15,6 +15,9 @@ jobs:
       SKYLAB_API_URL: ${{ secrets.SKYLAB_API_URL }}
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - uses: php-actions/composer@v6
       - uses: php-actions/phpunit@v3
 
@@ -23,9 +26,6 @@ jobs:
         with:
           php-version: "8.3"
           tools: none
-
-      - name: Checkout code
-        uses: actions/checkout@v4
 
       - name: Update system
         run: sudo apt-get update
