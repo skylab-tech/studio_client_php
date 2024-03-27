@@ -1,8 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
 require_once 'SkylabStudio.php';
-include 'Helpers.php';
-
 
 final class PhotosTest extends TestCase {
 	private $api;
