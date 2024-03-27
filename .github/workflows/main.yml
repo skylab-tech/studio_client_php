@@ -25,7 +25,10 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: "8.3"
-          extensions: ext-ffi
+          extensions: ffi
+
+      - name: yoooooOOooOOoo
+        run: /usr/local/etc/php/conf.d/docker-php-ext-sodium.ini
 
       - uses: php-actions/composer@v6
       - uses: php-actions/phpunit@v3
