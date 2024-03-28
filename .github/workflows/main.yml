@@ -30,8 +30,6 @@ jobs:
           coverage: none
           ini-file: production
 
-      - uses: php-actions/phpunit@v3
-
       - name: Update system
         run: sudo apt-get update
 
