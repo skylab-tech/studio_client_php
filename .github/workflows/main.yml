@@ -25,10 +25,13 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: "8.3"
-          extensions: ffi
+          # extensions: ffi
 
-      - name: Run php ini
-        run: php --ini
+      - name: Install PHP FFI extension
+        run: pecl install ffi
+
+      # - name: Run php ini
+      #   run: php --ini
 
       - name: cat ini
         run: cat /etc/php/8.3/cli/php.ini
