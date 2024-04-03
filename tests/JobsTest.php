@@ -6,7 +6,7 @@ include 'Helpers.php';
 final class JobsTest extends TestCase {
 	private $api;
 	protected function setUp(): void {
-		$this->api = new SkylabStudio("16V7LPczUNXb6cdY7V15G5s5");
+		$this->api = new SkylabStudio(getenv('PHP_SDK_STAGING_KEY'));
 	}
 
 	protected function &getJobId() {

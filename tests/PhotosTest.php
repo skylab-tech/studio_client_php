@@ -19,7 +19,7 @@ final class PhotosTest extends TestCase {
 	}
 
 	protected function setUp(): void {
-		$this->api = new SkylabStudio(getenv('SKYLAB_API_KEY'));
+		$this->api = new SkylabStudio(getenv('PHP_SDK_STAGING_KEY'));
 	}
 
 	public function testUploadJobPhoto() {

@@ -222,7 +222,6 @@ You will most likely find this information in your logs. To enable it, simply pu
 when instantiating the API object.
 
 ```php
-// TODO THIS SHOULD BE SKYLAB-STUDIO
 require_once 'skylab-studio';
 
 $api = new SkylabStudio("your-api-key", true);
