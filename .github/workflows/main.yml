@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install libvips
-        run: sudo apt install libvips-dev --no-install-recommends
+        run: sudo apt install libvips-dev --no-install-recommends --fix-missing
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
