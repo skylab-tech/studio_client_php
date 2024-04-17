@@ -41,10 +41,8 @@ class SkylabSDKUtil {
   public function _buildHeaders() {
     $headers = ['Content-Type' => 'application/json'];
     $headers['X-SLT-API-KEY'] = $this->API_KEY;
-    // TODO FIX API_CLIENT BEING NULL
     $headers['X-SLT-API-CLIENT'] = $this->API_CLIENT;
 
-    // TODO DOES THIS DO ANYTHING ATM??
     $this->_debug('Set headers: ' . json_encode($headers));
 
     return ['headers' => $headers];

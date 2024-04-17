@@ -38,27 +38,32 @@ class Photo
 	private function _uploadPhoto($photoPath, $id, $model = 'job')
 		{
 			$client = new GuzzleHttp\Client();
-			echo 'uploading photo: ~~~~~ ' . $photoPath . ', ' . $id;
-
 
 			$ext = pathinfo($photoPath, PATHINFO_EXTENSION);
+			$uploadOptions = [];
 
 			if (!in_array(strtolower($ext), self::validExtensions)) {
 					throw new Exception("Invalid file type: must be of type jpg/jpeg/png/webp");
 			}
 
-			// TODO
-			// $valid = $this->validateFile($photoPath);
-			$valid = true;
-			if (!$valid) {
-					throw new Exception("Invalid file size: must be within 6400x6400, and no larger than 27MB");
+			if ($model == 'job') {
+				$invalid = validateFile($photoPath);
+	
+				if ($invalid) {
+						throw new Exception("Invalid file size: must be within 6400x6400, and no larger than 27MB");
+				}
+
+				// photo valid, set upload options with tags
+				$job = $this->SkylabStudio->getJob($id);
+				if ($job->type == "regular") {
+						$uploadOptions['headers']["X-Amz-Tagging"] = "job=photo&api=true";
+				}
 			}
 
 			$response = [];
 
 			$photoName = basename($photoPath);
 
-			$uploadOptions = [];
 			$file = Vips\Image::newFromFile($photoPath);
 
 			if ($ext === "png") {
@@ -73,13 +78,6 @@ class Photo
 					"name" => $photoName,
 					"use_cache_upload" => false
 			];
-
-			if ($model == "job") {
-					$job = $this->SkylabStudio->getJob($id);
-					if ($job->type == "regular") {
-							$uploadOptions['headers']["X-Amz-Tagging"] = "job=photo&api=true";
-					}
-			}
 
 			// Create Studio photo record
 			$photoResp = $this->createPhoto($photoData);
@@ -154,6 +152,11 @@ class Photo
 		{
 			return $this->_uploadPhoto($photoPath, $id);
 		}
+
+	// public function uploadProfilePhoto($photoPath, $id)
+	// 	{
+	// 		return $this->_uploadPhoto($photoPath, $id, 'profile');
+	// 	}
 
 	public function deletePhoto($id)
 		{

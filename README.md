@@ -169,18 +169,6 @@ $api.uploadJobPhoto($photoPath, $jobId);
 
 If upload fails, the photo object is deleted for you. If upload succeeds and you later decide you no longer want to include that image, use delete_photo to remove it.
 
-#### Upload Profile Photo
-
-This function handles validating a background photo for a profile. Note: `enable_extract` and `replace_background` (profile attributes) **MUST** be true in order to create background photos. Follows the same upload process as uploadJobPhoto.
-
-```php
-$api.uploadProfilePhoto($photoPath, $profileId);
-```
-
-`Returns: { photo: { photoObject }, uploadResponse: bucketUploadResponseStatus }`
-
-If upload fails, the photo object is deleted for you. If upload succeeds and you later decide you no longer want to include that image, use delete_photo to remove it.
-
 ### Get a Photo
 
 ```php
@@ -199,9 +187,6 @@ $api.deletePhoto($photoId);
 - jobJson: Raw JSON response from callback
 - requestTimestamp: Timestamp header received in callback under 'X-Skylab-Timestamp'
 - signature: Signature header received in callback under 'X-Skylab-Signature'
-
-// TODO - NOT RELEVANT
-**NOTE:** If using something like an express server to handle the callback, the JSON response needs to be the raw response. If your express server is running `app.use(express.json)` you will need to create a middleware and pass it to your callback handler to use the raw response: `app.use(express.raw({ type: 'application/json' }))`
 
 ```php
 $api.validateHmacHeaders($secretKey, $jobJson, $requestTimestamp, $signature);
