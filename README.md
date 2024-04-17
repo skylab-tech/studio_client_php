@@ -22,23 +22,23 @@ $profilePayload = [
   'enable_retouch' => true
 ]
 
-$profile = $api.createProfile(profilePayload)
+$profile = $api->createProfile($profilePayload)
 
 // CREATE JOB
 $jobPayload = [
   'name' => 'job name',
-  'profile_id' => profile.id
+  'profile_id' => $profile['id']
 ]
 
-$job = $api.createJob(jobPayload)
+$job = $api->createJob($jobPayload)
 
 // UPLOAD JOB PHOTO(S)
 $filePath = '/path/to/photo'
-$api.uploadJobPhoto($filePath, $job->id)
+$api->uploadJobPhoto($filePath, $job->id)
 
 // QUEUE JOB
 $payload = [ 'callback_url' => 'YOUR_CALLBACK_ENDPOINT' ]
-$api.queueJob(job.id, $payload)
+$api->queueJob(job.id, $payload)
 
 // NOTE: Once the job is queued, it will transition to processed and then completed
 // We will send a response to the specified callback_url with the output photo download urls
@@ -51,7 +51,7 @@ $api.queueJob(job.id, $payload)
 List the last 30 jobs.
 
 ```php
-$api.listJobs();
+$api->listJobs();
 ```
 
 ### Create a Job
@@ -63,7 +63,7 @@ $payload = [
   'profile_id' => 123
 ]
 
-$api.createJob($payload);
+$api->createJob($payload);
 ```
 
 For all payload options, consult the [API documentation](https://studio-docs.skylabtech.ai/#tag/job/operation/createJob).
@@ -71,13 +71,13 @@ For all payload options, consult the [API documentation](https://studio-docs.sky
 ### Get a Job
 
 ```php
-$api.getJob($jobId);
+$api->getJob($jobId);
 ```
 
 ### Get Job by Name
 
 ```php
-$api.getJobByName($name);
+$api->getJobByName($name);
 ```
 
 ### Update a Job
@@ -88,7 +88,7 @@ $payload = [
   'profile_id' => 123
 ]
 
-$api.updateJob($jobId, $payload);
+$api->updateJob($jobId, $payload);
 ```
 
 For all payload options, consult the [API documentation](https://studio-docs.skylabtech.ai/#tag/job/operation/updateJobById).
@@ -98,25 +98,25 @@ For all payload options, consult the [API documentation](https://studio-docs.sky
 ```php
 $payload = [ 'callback_url' => 'YOUR_CALLBACK_ENDPOINT' ]
 
-$api.queueJob($jobId, $payload);
+$api->queueJob($jobId, $payload);
 ```
 
 ### Jobs in Front
 
 ```php
-$api.getJobsInFront($jobId);
+$api->getJobsInFront($jobId);
 ```
 
 ### Delete a Job
 
 ```php
-$api.deleteJob($jobId);
+$api->deleteJob($jobId);
 ```
 
 ### Cancel a Job
 
 ```php
-$api.cancelJob($jobId);
+$api->cancelJob($jobId);
 ```
 
 ## Profiles
@@ -124,13 +124,13 @@ $api.cancelJob($jobId);
 ### List all Profiles
 
 ```php
-$api.listProfiles();
+$api->listProfiles();
 ```
 
 ### Create a Profile
 
 ```php
-$api.createProfile([
+$api->createProfile([
   'name' => 'My Profile'
 ]);
 ```
@@ -140,7 +140,7 @@ For all payload options, consult the [API documentation](https://studio-docs.sky
 ### Get a Profile
 
 ```php
-$api.getProfile($profileId);
+$api->getProfile($profileId);
 ```
 
 ### Update profile
@@ -150,7 +150,7 @@ $payload = [
   'name' => 'My updated profile name',
 ];
 
-$api.updateProfile($profileId, $payload);
+$api->updateProfile($profileId, $payload);
 ```
 
 For all payload options, consult the [API documentation](https://studio-docs.skylabtech.ai/#tag/profile/operation/updateProfileById).
@@ -162,7 +162,7 @@ For all payload options, consult the [API documentation](https://studio-docs.sky
 This function handles validating a photo, creating a photo object and uploading it to your job/profile's s3 bucket. If the bucket upload process fails, it retries 3 times and if failures persist, the photo object is deleted.
 
 ```php
-$api.uploadJobPhoto($photoPath, $jobId);
+$api->uploadJobPhoto($photoPath, $jobId);
 ```
 
 `Returns: { photo: { photoObject }, uploadResponse: bucketUploadResponseStatus }`
@@ -172,13 +172,13 @@ If upload fails, the photo object is deleted for you. If upload succeeds and you
 ### Get a Photo
 
 ```php
-$api.getPhoto($photoId);
+$api->getPhoto($photoId);
 ```
 
 ### Delete a Photo
 
 ```php
-$api.deletePhoto($photoId);
+$api->deletePhoto($photoId);
 ```
 
 ### Validate HMAC Headers
@@ -189,7 +189,7 @@ $api.deletePhoto($photoId);
 - signature: Signature header received in callback under 'X-Skylab-Signature'
 
 ```php
-$api.validateHmacHeaders($secretKey, $jobJson, $requestTimestamp, $signature);
+$api->validateHmacHeaders($secretKey, $jobJson, $requestTimestamp, $signature);
 ```
 
 ## Troubleshooting
