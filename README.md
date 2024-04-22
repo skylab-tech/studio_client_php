@@ -34,11 +34,11 @@ $job = $api->createJob($jobPayload);
 
 // UPLOAD JOB PHOTO(S)
 $filePath = '/path/to/photo';
-$api->uploadJobPhoto($filePath, $job->id);
+$api->uploadJobPhoto($filePath, $job['id']);
 
 // QUEUE JOB
 $payload = [ 'callback_url' => 'YOUR_CALLBACK_ENDPOINT' ];
-$api->queueJob(job.id, $payload);
+$api->queueJob($job['id'], $payload);
 
 // NOTE: Once the job is queued, it will transition to processed and then completed
 // We will send a response to the specified callback_url with the output photo download urls
@@ -179,17 +179,6 @@ $api->getPhoto($photoId);
 
 ```php
 $api->deletePhoto($photoId);
-```
-
-### Validate HMAC Headers
-
-- secretKey: Obtained from Skylab account (contact)
-- jobJson: Raw JSON response from callback
-- requestTimestamp: Timestamp header received in callback under 'X-Skylab-Timestamp'
-- signature: Signature header received in callback under 'X-Skylab-Signature'
-
-```php
-$api->validateHmacHeaders($secretKey, $jobJson, $requestTimestamp, $signature);
 ```
 
 ## Troubleshooting
