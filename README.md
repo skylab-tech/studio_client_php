@@ -20,25 +20,25 @@ $profilePayload = [
   'name' => 'profile name',
   'enable_crop' => false,
   'enable_retouch' => true
-]
+];
 
-$profile = $api->createProfile($profilePayload)
+$profile = $api->createProfile($profilePayload);
 
 // CREATE JOB
 $jobPayload = [
   'name' => 'job name',
   'profile_id' => $profile['id']
-]
+];
 
-$job = $api->createJob($jobPayload)
+$job = $api->createJob($jobPayload);
 
 // UPLOAD JOB PHOTO(S)
-$filePath = '/path/to/photo'
-$api->uploadJobPhoto($filePath, $job->id)
+$filePath = '/path/to/photo';
+$api->uploadJobPhoto($filePath, $job->id);
 
 // QUEUE JOB
-$payload = [ 'callback_url' => 'YOUR_CALLBACK_ENDPOINT' ]
-$api->queueJob(job.id, $payload)
+$payload = [ 'callback_url' => 'YOUR_CALLBACK_ENDPOINT' ];
+$api->queueJob(job.id, $payload);
 
 // NOTE: Once the job is queued, it will transition to processed and then completed
 // We will send a response to the specified callback_url with the output photo download urls
