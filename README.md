@@ -5,7 +5,7 @@
 ## Installation
 
 ```
-composer install skylab-studio
+composer require skylab/studio
 ```
 
 ## Example usage
