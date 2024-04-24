@@ -1,9 +1,20 @@
 {
   "name": "skylab/studio",
+  "authors": [
+    {
+      "name": "SkylabTech",
+      "email": "info@skylabtech.ai",
+      "homepage": "https://skylabtech.ai",
+      "role": "Developer"
+    }
+  ],
   "version": "0.0.1",
-  "author": "SkylabTech <info@skylabtech.ai>",
   "description": "studio.skylabtech.ai PHP client",
   "require": {
-    "guzzlehttp/guzzle": "^7.0"
+    "guzzlehttp/guzzle": "^7.0",
+    "jcupitt/vips": "2.3.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.0"
   }
 }

@@ -73,10 +73,10 @@ class Job
 			return $this->SkylabStudio->makeRequest("DELETE", $url, $options);
     }
 
-	public function queueJob($id, $data)
+	public function queueJob($id, $data = null)
 		{
-			$url = $this->SkylabStudio->_buildUrl("jobs", $id, "queue");
-			$options = $this->SkylabStudio->_buildHeaders();
+			$url = $this->SkylabSDKUtil->_buildUrl("jobs", $id, "queue");
+			$options = $this->SkylabSDKUtil->_buildHeaders();
 
 			$jsonData = json_encode($data);
 			$options['body'] = $jsonData;
@@ -86,8 +86,8 @@ class Job
 
 	public function cancelJob($id)
     {
-			$url = $this->SkylabStudio->_buildUrl("jobs", $id, "cancel");
-			$options = $this->SkylabStudio->_buildHeaders();
+			$url = $this->SkylabSDKUtil->_buildUrl("jobs", $id, "cancel");
+			$options = $this->SkylabSDKUtil->_buildHeaders();
 
 			return $this->SkylabStudio->makeRequest("POST", $url, $options);
     }
