@@ -8,7 +8,6 @@
       "role": "Developer"
     }
   ],
-  "version": "0.0.1",
   "description": "studio.skylabtech.ai PHP client",
   "require": {
     "guzzlehttp/guzzle": "^7.0",
