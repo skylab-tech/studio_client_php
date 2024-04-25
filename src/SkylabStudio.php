@@ -12,22 +12,14 @@ require 'vendor/autoload.php';
 
 class SkylabSDKUtil {
 	protected $SKYLAB_API_URL;
-  protected $PACKAGE_VERSION;
   protected $API_CLIENT;
   protected $SkylabStudio;
   protected $DEBUG;
   private $API_KEY;
 	
   public function __construct($api_key, $SkylabStudio, $debug) {
-		// Load package data// Read the contents of composer.json
-		$composerJsonContents = file_get_contents(__DIR__ . '/composer.json');
-
-		// Decode the JSON content
-		$composerData = json_decode($composerJsonContents, true);
-
     $this->SKYLAB_API_URL = getenv('SKYLAB_API_URL') ?: 'https://studio.skylabtech.ai:443';
-    $this->PACKAGE_VERSION = $composerData['version'] ?? null;
-    $this->API_CLIENT = 'php-' . $this->PACKAGE_VERSION;
+    $this->API_CLIENT = 'php-sdk';
     $this->DEBUG = $debug;
 		$this->SkylabStudio = $SkylabStudio;
     $this->API_KEY = $api_key;
