@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: true
     env:
-      SDK_STAGING_KEY: ${{ secrets.SDK_STAGING_KEY }}
+      SDK_STAGING_KEY: ${{ secrets.PHP_SDK_STAGING_KEY }}
       SKYLAB_API_URL: ${{ secrets.SKYLAB_API_URL }}
 
     steps:
