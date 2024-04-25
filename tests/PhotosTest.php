@@ -1,6 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
-require_once 'SkylabStudio.php';
+// require_once 'SkylabStudio.php';
+use Skylab\Studio\SkylabStudio;
 
 final class PhotosTest extends TestCase {
 	private $api;
@@ -19,7 +20,7 @@ final class PhotosTest extends TestCase {
 	}
 
 	protected function setUp(): void {
-		$this->api = new SkylabStudio(getenv('PHP_SDK_STAGING_KEY'));
+		$this->api = new SkylabStudio(getenv('SDK_STAGING_KEY'));
 	}
 
 	public function testUploadJobPhoto() {
