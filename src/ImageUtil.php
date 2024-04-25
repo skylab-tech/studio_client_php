@@ -1,5 +1,4 @@
 <?php
-use Jcupitt\Vips;
 
 function validateFile($photoPath) {
 	try {

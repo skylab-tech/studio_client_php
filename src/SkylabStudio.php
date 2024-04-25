@@ -1,6 +1,7 @@
 <?php
+namespace Skylab\Studio;
 
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 
@@ -81,14 +82,13 @@ class SkylabSDKUtil {
 			$url .= "/upload_url?use_cache_upload=" . $use_cache_upload . "&photo_id=" . urlencode($photo_id) . "&content_md5=" . urlencode($content_md5);
 			$options = $this->_buildHeaders();
 
-			$client = new GuzzleHttp\Client();
+			$client = new Client();
 			$response = [];
 			try {
 				$response = $client->request("GET", $url, $options);
 			}
-			catch(Exception $e) {
+			catch(RequestException $e) {
 				error_log($e->getMessage());
-				echo 'WTF......' . $e->getCode();
 				return array('status' => $e->getCode(), 'message'=> $e->getMessage());
 			}
 
@@ -105,9 +105,9 @@ class SkylabStudio {
     public function __construct($apiKey, $debug = false) {
         $this->API_KEY = $apiKey;
         $this->SkylabSDKUtil = new SkylabSDKUtil($apiKey, $this, $debug);
-        $this->subclasses['jobs'] = new Job($this, $this->SkylabSDKUtil);
-        $this->subclasses['profiles'] = new Profile($this, $this->SkylabSDKUtil);
-        $this->subclasses['photos'] = new Photo($this, $this->SkylabSDKUtil);
+        $this->subclasses['jobs'] = new \Job($this, $this->SkylabSDKUtil);
+        $this->subclasses['profiles'] = new \Profile($this, $this->SkylabSDKUtil);
+        $this->subclasses['photos'] = new \Photo($this, $this->SkylabSDKUtil);
 
         $this->SkylabSDKUtil->_debug('Debug enabled');
     }
@@ -124,7 +124,7 @@ class SkylabStudio {
     }
 
 		public function makeRequest($method, $url, $options) {
-			$client = new GuzzleHttp\Client();
+			$client = new Client();
 			$promise = $client->requestAsync($method, $url, $options);
 
 			return $promise->then(
