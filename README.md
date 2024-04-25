@@ -186,7 +186,6 @@ $api->deletePhoto($photoId);
 ### General Troubleshooting
 
 - Enable debug mode
-- Make sure you're using the latest Node client
 - Capture the response data and check your logs &mdash; often this will have the exact error
 
 ### Enable Debug Mode
@@ -196,8 +195,6 @@ You will most likely find this information in your logs. To enable it, simply pu
 when instantiating the API object.
 
 ```php
-require_once 'skylab-studio';
-
 $api = new SkylabStudio("your-api-key", true);
 ```
 

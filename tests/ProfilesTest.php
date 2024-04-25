@@ -1,11 +1,12 @@
 <?php
 use PHPUnit\Framework\TestCase;
+use Skylab\Studio\SkylabStudio;
 
 final class ProfilesTest extends TestCase {
 	private $api;
 
 	protected function setUp(): void {
-		$this->api = new SkylabStudio(getenv('PHP_SDK_STAGING_KEY'));
+		$this->api = new SkylabStudio(getenv('SDK_STAGING_KEY'));
 	}
 
 	protected function &getProfileId() {

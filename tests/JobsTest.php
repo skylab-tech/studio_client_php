@@ -1,12 +1,12 @@
 <?php
 use PHPUnit\Framework\TestCase;
-require_once 'SkylabStudio.php';
+use Skylab\Studio\SkylabStudio;
 include 'Helpers.php';
 
 final class JobsTest extends TestCase {
 	private $api;
 	protected function setUp(): void {
-		$this->api = new SkylabStudio(getenv('PHP_SDK_STAGING_KEY'));
+		$this->api = new SkylabStudio(getenv('SDK_STAGING_KEY'));
 	}
 
 	protected function &getJobId() {
