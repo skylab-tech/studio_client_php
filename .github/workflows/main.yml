@@ -30,9 +30,6 @@ jobs:
           coverage: none
           ini-file: production
 
-      - name: Update system
-        run: sudo apt-get update
-
       - name: Install dependencies
         run: composer install
 
