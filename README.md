@@ -10,8 +10,21 @@ composer require skylab/studio
 
 ## Example usage
 
+Ensure that autoload is configured properly in `composer.json`
+
 ```php
-require_once 'SkylabStudio.php';
+{
+  "autoload": {
+    "psr-4": {
+      "Skylab\\Studio\\": "src/"
+    }
+  }
+}
+```
+
+```php
+require './vendor/autoload.php';
+use Skylab\Studio\SkylabStudio;
 
 $api = new SkylabStudio('your-api-key');
 
